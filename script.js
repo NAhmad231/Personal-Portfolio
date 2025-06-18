@@ -26,58 +26,42 @@ nextBtn.addEventListener('click', () => {
     }
 });
 
-// Animate Progress Circles
-function animateProgressCircles() {
-    const progressCircles = document.querySelectorAll('.progress-circle');
+  function filterSkills(category) {
+            const allSkills = document.querySelectorAll('.skill');
 
-    progressCircles.forEach(circle => {
-        let progress = circle.getAttribute('data-progress');
-        circle.style.setProperty('--progress', progress + '%');
-    });
-}
-
-window.addEventListener('load', animateProgressCircles);
-
-// Scroll Active Link
-window.addEventListener('scroll', () => {
-    let sections = document.querySelectorAll('.container');
-    let navLinks = document.querySelectorAll('.nav-link');
-
-    let current = '';
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop - 100;
-        if (pageYOffset >= sectionTop) {
-            current = section.getAttribute('id');
+            allSkills.forEach(skill => {
+                if (category === 'all') {
+                    skill.style.display = 'block';
+                } else {
+                    if (skill.classList.contains(category)) {
+                        skill.style.display = 'block';
+                    } else {
+                        skill.style.display = 'none';
+                    }
+                }
+            });
         }
-    });
 
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
-    });
-});
 
 // Initialize EmailJS
 (function () {
-    emailjs.init('X4SbwJKE49UoSRVTe');
+    emailjs.init('X4SbwJKE49UoSRVTe'); // Keep only this, remove the empty one
 })();
 
 // Contact Form Submission
-document.getElementById('contactForm').addEventListener('submit', function (e) {
+document.getElementById('contact-form').addEventListener('submit', function (e) {
     e.preventDefault();
 
     emailjs.sendForm('service_1dzptq3', 'template_8ifz8w4', this)
         .then(function () {
             alert('Message sent successfully!');
-            document.getElementById('contactForm').reset();
+            document.getElementById('contact-form').reset();
         }, function (error) {
             alert('Failed to send message, please try again.');
             console.log('FAILED...', error);
         });
 });
 
-emailjs.init('');
+
 
 
